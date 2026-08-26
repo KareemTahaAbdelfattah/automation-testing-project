@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Login Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+    <test name="Login and Dashboard">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.DashboardTest"/>
+        </classes>
+    </test>
+    <test name="Add and View Employees">
+        <classes>
+            <class name="tests.AddEmployeeTest"/>
+            <class name="tests.ViewEmployeeListTest"/>
+        </classes>
+    </test>
+    <test name="Save System User Data">
+        <classes>
+            <class name="tests.SaveSystemUserPageList"/>
+        </classes>
+    </test>
+</suite>

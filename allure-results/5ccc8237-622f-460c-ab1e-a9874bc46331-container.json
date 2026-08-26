@@ -1,0 +1,1 @@
+{"uuid":"5ccc8237-622f-460c-ab1e-a9874bc46331","name":"loginTestUsingValidCredentials","children":["cd800d92-69b8-487e-bf60-c4ace920f81b"],"befores":[{"name":"validLoginData","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1787169458049,"stop":1787169458191}],"afters":[],"start":1787169458037,"stop":1787169462507}

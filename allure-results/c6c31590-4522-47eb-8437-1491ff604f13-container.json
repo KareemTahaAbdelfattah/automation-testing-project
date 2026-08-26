@@ -1,1 +1,0 @@
-{"uuid":"c6c31590-4522-47eb-8437-1491ff604f13","name":"verifySideBarMenuAfterSuccessfulLogin","children":["c9b58503-5ccf-45fd-884f-ac4d515128d0"],"befores":[{"name":"validLoginData","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1787782028068,"stop":1787782028210}],"afters":[],"start":1787782028068,"stop":1787782038397}

@@ -1,1 +1,0 @@
-{"uuid":"93fb899d-caa9-465f-901c-23d91c61765d","name":"orangehrm_graduation_project","children":["caa6d5c1-315d-4f97-84f2-5bc1c68c4ef9"],"befores":[],"afters":[{"name":"openAllureReports","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1787314966386,"stop":1787314967855}],"start":1787314956281,"stop":1787314967855}

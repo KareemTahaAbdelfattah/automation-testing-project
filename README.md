@@ -1,188 +1,105 @@
-# Automation-Testing-Project
-# OrangeHRM Test Automation Framework
+# OrangeHRM UI Automation Framework
 
-This project is an automated UI testing framework for the OrangeHRM demo application. It is developed using Java, Selenium WebDriver, TestNG, Maven, and the Page Object Model design pattern.
+A Selenium WebDriver automation project for testing the [OrangeHRM Open Source Demo](https://opensource-demo.orangehrmlive.com/) using **Java, TestNG, Maven, and the Page Object Model (POM)**.
 
-The framework automates important OrangeHRM workflows, including authentication, dashboard navigation, employee management, system-user management, sidebar validation, footer validation, and data-driven employee creation.
+The project automates important HR application workflows, including authentication, employee management, user management, navigation, and UI validation.
 
-OrangeHRM is a Human Resource Management System that provides modules such as administration, employee information management, leave management, recruitment, time management, performance management, and directory services. [web:215][web:323][web:329]
-
-## Project Objectives
-
-The main objectives of this project are to:
-
-- Automate functional test scenarios for the OrangeHRM web application.
-- Validate critical user journeys and application navigation.
-- Reduce duplicated Selenium code using the Page Object Model.
-- Use data-driven testing for scenarios with multiple test inputs.
-- Externalize environment settings and test data.
-- Generate readable execution reports using Allure.
-- Capture screenshots when tests fail.
-- Apply reusable waits and common test utilities.
-
-## Application Under Test
-
-- Application: OrangeHRM Demo
-- URL: https://opensource-demo.orangehrmlive.com
-- Application type: Human Resource Management System
-- Test type: Web UI functional automation
-
-The OrangeHRM demo application is used to validate workflows related to administration, employee information, leave, recruitment, time, performance, and directory management. [web:318][web:323][web:329]
-
-## Technology Stack
+## Technologies Used
 
 - Java
 - Selenium WebDriver
 - TestNG
 - Maven
-- Page Object Model
-- Apache POI or JSON-based test data
+- Page Object Model (POM)
+- Jackson or Gson for JSON test-data handling
 - Allure Report
 - Git and GitHub
-- IntelliJ IDEA
 - Chrome WebDriver
 
-Selenium Page Object Model separates test logic from page interaction logic, which improves maintainability and reduces locator duplication. [web:154][web:322]
+## Application Under Test
 
-## Main Test Areas
+- **Application:** OrangeHRM Open Source Demo
+- **URL:** https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+- **Username:** `Admin`
+- **Password:** `admin123`
 
-### Login
+> These credentials are provided by the public OrangeHRM demo application and should not be used for production systems.
 
-- Login with valid credentials.
-- Validate the Dashboard after successful login.
-- Validate invalid and missing credentials.
-- Validate logout functionality.
+## Project Objectives
 
-### Dashboard
+The main objectives of this project are to:
 
-- Verify Dashboard navigation.
-- Verify the sidebar menu.
-- Validate available navigation modules.
-- Verify footer content.
+- Automate OrangeHRM UI workflows using Selenium WebDriver.
+- Apply the Page Object Model design pattern.
+- Create reusable and maintainable test components.
+- Implement positive, negative, and validation test scenarios.
+- Use explicit waits instead of `Thread.sleep()`.
+- Execute tests in parallel using independent WebDriver instances.
+- Read test data from JSON files using TestNG DataProviders.
+- Generate detailed Allure test reports.
 
-### Admin
+## Automated Test Scenarios
 
-- Navigate to the Admin module.
-- Open the System Users page.
-- Open the Add User page.
-- Validate User Role, Employee Name, Username, Password, and Status fields.
-- Add a new system user.
-- Search for an existing user.
+The project covers the following scenarios:
 
-### PIM
+1. Login with valid credentials.
+2. Login with invalid credentials.
+3. Login with empty username and password fields.
+4. Search for an existing employee.
+5. Search for a non-existing employee.
+6. Open and verify the Add Employee page.
+7. Validate required fields when adding an employee.
+8. Add a new employee and verify the employee record.
+9. Verify the Admin > User Management > Add User page.
+10. Verify the OrangeHRM footer and branding link.
+11. Verify the sidebar menu items.
 
-- Add a new employee.
-- Use TestNG DataProvider for first name and last name.
-- Verify employee details.
-- Search for an employee.
-- Validate the employee search result.
+## Framework Features
 
-### Leave
+### Page Object Model
 
-- Open the Leave module.
-- Apply for leave.
-- Validate leave-related fields and messages.
-- Verify leave records.
+Each application page has a separate page class containing:
 
-### Recruitment and Other Modules
+- Web element locators.
+- Page-specific actions.
+- Reusable methods.
+- Page navigation methods.
 
-- Validate navigation to Recruitment, Time, My Info, Performance, and Directory.
-- Verify that accessible sidebar menu items are displayed for the logged-in user.
+This keeps test classes clean and improves maintainability when the application UI changes.
 
-## Framework Structure
+### Explicit Waits
 
-```text
-orangehrm_graduation_project
-│
-├── .mvn
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   ├── pages
-│   │   │   ├── utility
-│   │   │   └── utils
-│   │   └── resources
-│   │
-│   └── test
-│       ├── java
-│       │   ├── base
-│       │   ├── tests
-│       │   └── testData
-│       │
-│       └── resources
-│           ├── config.properties
-│           ├── allure.properties
-│           └── testNG.xml
-│
-├── pom.xml
-└── README.md
-```
+The framework uses Selenium explicit waits to synchronize test execution with the application state. It avoids fixed delays such as `Thread.sleep()`.
 
-## Design Pattern
+Examples of conditions used include:
 
-This project uses the Page Object Model. Each important page or reusable application area is represented by a Java class containing its locators and actions.
+- Element visibility.
+- Element clickability.
+- URL changes.
+- Presence of elements.
+- Text visibility.
 
-Examples:
+### Data-Driven Testing
+
+Test data is stored in JSON files under:
 
 ```text
-LoginPage.java
-DashboardPage.java
-ViewEmployeeListPage.java
-AddEmployeePage.java
-ViewSystemUserPage.java
-AddUserPage.java
-CommonPage.java
+src/test/resources/testdata/
 ```
 
-Tests call page methods instead of directly interacting with Selenium locators:
+The data is read using a TestNG `DataProvider`, allowing the same test method to run with multiple data sets without hardcoding values inside the test methods.
 
-```java
-loginPage.loginUsingCredentials(username, password);
+Example data may include:
 
-dashboardPage.navigateToPIMLinkText();
+- Valid usernames and passwords.
+- Invalid login credentials.
+- Employee names.
+- New employee details.
+- Non-existing employee names.
 
-addEmployeePage.AddEmployee(firstName, lastName);
+### Configuration Management
 
-viewEmployeeListPage.searchEmployeeByName(fullName);
-```
-
-This approach keeps tests readable and ensures that locator changes can be handled inside the relevant page object. [web:154][web:155]
-
-## Data-Driven Testing
-
-TestNG DataProvider is used to execute the same test with multiple employee names:
-
-```java
-@DataProvider(name = "employeeNamesData")
-public static Object[][] employeeNamesData() {
-    return new Object[][]{
-            {"Koey", "Mark"},
-            {"Kareem", "Taha"},
-            {"Ahmed", "Ali"}
-    };
-}
-```
-
-The test receives the values as method parameters:
-
-```java
-@Test(
-        dataProvider = "employeeNamesData",
-        dataProviderClass = DataDriven.class
-)
-public void addEmployeeTest(
-        String firstName,
-        String lastName
-) {
-    addEmployeePage.AddEmployee(firstName, lastName);
-}
-```
-
-TestNG executes the test once for each row returned by the DataProvider. [web:34][web:67]
-
-## Configuration
-
-Environment settings are stored in:
+Environment-specific settings are stored in:
 
 ```text
 src/test/resources/config.properties
@@ -196,102 +113,283 @@ browser=chrome
 explicit.wait=10
 ```
 
-The configuration is read using Java’s `Properties` class instead of hardcoding values in the test code.
+The configuration is loaded using Java's built-in `Properties` class.
 
-## Reporting
+### Parallel Execution
 
-Allure is integrated with TestNG to generate interactive test reports. The raw Allure results are stored in:
+Parallel execution is configured in `testng.xml`:
+
+```xml
+<suite name="OrangeHRM Test Suite" parallel="tests" thread-count="2">
+```
+
+The framework uses `ThreadLocal<WebDriver>` so every parallel test thread receives its own independent browser instance.
+
+### Allure Reporting
+
+The project integrates Allure with TestNG to provide:
+
+- Test execution results.
+- Test steps.
+- Test status.
+- Failure details.
+- Execution duration.
+- Screenshots or attachments, when configured.
+
+## Project Structure
 
 ```text
-target/allure-results
+OrangeHRM-Automation/
+│
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       ├── driver/
+│   │       │   └── DriverManager.java
+│   │       ├── pages/
+│   │       │   ├── LoginPage.java
+│   │       │   ├── DashboardPage.java
+│   │       │   ├── PimPage.java
+│   │       │   ├── AddEmployeePage.java
+│   │       │   └── AdminPage.java
+│   │       └── utils/
+│   │           ├── ConfigReader.java
+│   │           ├── JsonDataReader.java
+│   │           └── WaitUtils.java
+│   │
+│   ├── test/
+│   │   ├── java/
+│   │   │   ├── base/
+│   │   │   │   └── BaseTest.java
+│   │   │   └── tests/
+│   │   │       ├── LoginTests.java
+│   │   │       ├── EmployeeTests.java
+│   │   │       ├── AdminTests.java
+│   │   │       └── NavigationTests.java
+│   │   │
+│   │   └── resources/
+│   │       ├── config.properties
+│   │       └── testdata/
+│   │           └── test-data.json
+│   │
+│   └── testng.xml
+│
+├── allure-report/
+├── pom.xml
+├── .gitignore
+└── README.md
 ```
 
-To generate and open the report:
+> Adjust the structure above to match the actual package and file names in your repository.
 
-```powershell
-allure generate .\target\allure-results --clean -o .\target\allure-report
-allure open .\target\allure-report
+## Prerequisites
+
+Before running the project, install the following:
+
+- Java JDK 8 or later.
+- Apache Maven.
+- Google Chrome.
+- Allure Commandline.
+- Git.
+
+Verify the installations:
+
+```bash
+java -version
+mvn -version
+allure --version
 ```
 
-Alternatively:
+## Configuration
 
-```powershell
-allure serve .\target\allure-results
+Update the following file if necessary:
+
+```text
+src/test/resources/config.properties
 ```
 
-Allure reports require result files to be generated by the test framework before the report is opened. [web:80][web:237][web:253]
+Example:
 
-## Test Execution
+```properties
+base.url=https://opensource-demo.orangehrmlive.com/web/index.php/
+browser=chrome
+explicit.wait=10
+```
 
-Run all tests from the project root:
+The default browser is Chrome. If your framework supports other browsers, update the browser value according to your implementation.
 
-```powershell
+## Running the Tests
+
+### Run all tests
+
+```bash
 mvn clean test
 ```
 
-If the Maven command is unavailable, install Maven and add its `bin` directory to the Windows PATH.
+### Run tests using TestNG configuration
 
-After execution, verify the Allure result files:
-
-```powershell
-Get-ChildItem .\target\allure-results
+```bash
+mvn test -DsuiteXmlFile=testng.xml
 ```
 
-Then open the report:
+### Run a specific test class
 
-```powershell
-allure serve .\target\allure-results
+```bash
+mvn -Dtest=LoginTests test
 ```
 
-## TestNG Suite
+### Generate the Allure Report
 
-Tests can be executed using:
+After test execution, generate the static report using:
+
+```bash
+allure generate allure-results --clean -o allure-report
+```
+
+Alternatively, if configured in Maven:
+
+```bash
+mvn test allure:report
+```
+
+### Open the Allure Report
+
+```bash
+allure open allure-report
+```
+
+The generated report is stored in:
 
 ```text
-src/test/resources/testNG.xml
+allure-report/
 ```
 
-Example command:
+The `allure-results` directory contains temporary execution data and should not be committed to GitHub.
 
-```powershell
-mvn test
+## Git Ignore
+
+The following generated files should generally be excluded from version control:
+
+```gitignore
+target/
+allure-results/
+*.log
+.idea/
+*.iml
 ```
 
-or:
+The generated `allure-report` directory may be committed if you want visitors to view the static report directly from the repository.
 
-```powershell
-mvn -DsuiteXmlFile=src/test/resources/testNG.xml test
+## Test Execution Flow
+
+The general test execution flow is:
+
+1. Load browser and environment settings from `config.properties`.
+2. Create a thread-safe WebDriver instance.
+3. Open the OrangeHRM application.
+4. Execute the selected test scenario.
+5. Apply explicit waits and assertions.
+6. Capture test results through Allure.
+7. Close the browser after test execution.
+8. Generate the Allure HTML report.
+
+## Example Test Flow
+
+```text
+Open OrangeHRM
+        ↓
+Login with valid credentials
+        ↓
+Navigate to PIM
+        ↓
+Open Employee List
+        ↓
+Search for employee
+        ↓
+Validate search result
+        ↓
+Generate test result
 ```
 
-## Failure Handling
+## Test Design Approach
 
-When a test fails, the framework:
+The tests include:
 
-- Captures a screenshot.
-- Saves the screenshot under the screenshots directory.
-- Closes the WebDriver instance.
-- Generates Allure test results when the Allure TestNG listener is configured.
-- Makes failures easier to investigate.
+- Positive testing.
+- Negative testing.
+- Boundary and validation testing.
+- End-to-end testing.
+- UI element verification.
+- Navigation verification.
+- Data-driven testing.
 
-Screenshots can be attached directly to Allure using an Allure attachment method so they appear in the report rather than only being saved as local image files.
+Assertions are used to verify:
+
+- Page URLs.
+- Page headers.
+- Error messages.
+- Validation messages.
+- Search results.
+- Form fields.
+- Sidebar menu items.
+- Footer links.
+
+## Reporting
+
+Allure reports provide a clear view of:
+
+- Passed tests.
+- Failed tests.
+- Skipped tests.
+- Test steps.
+- Failure messages.
+- Execution time.
+- Test history, if configured.
+
+A sample report can be viewed from the committed `allure-report` directory or generated locally after running the test suite.
+
+## Best Practices Applied
+
+- Page Object Model for maintainable test design.
+- Reusable methods for common application actions.
+- Explicit waits instead of hardcoded delays.
+- Meaningful assertions for every test case.
+- Externalized configuration values.
+- Externalized test data.
+- Thread-safe WebDriver management.
+- Clear test naming conventions.
+- Separation between test logic and page interaction logic.
+- Maven-based project execution.
+- Allure reporting for test visibility.
 
 ## Future Improvements
 
-- Add cross-browser execution.
-- Add parallel test execution.
-- Add API-based test data setup.
-- Add database validation using MySQL.
-- Add GitHub Actions CI/CD integration.
-- Add retry handling for temporary failures.
-- Add environment selection for QA and staging.
-- Add HTML test data files or Excel-based DataProviders.
-- Improve Allure screenshot and video attachments.
-- Add logging with Log4j or SLF4J.
+Possible future improvements include:
+
+- Adding cross-browser testing for Chrome and Firefox.
+- Adding automated screenshots for failed tests.
+- Adding GitHub Actions CI/CD execution.
+- Adding API testing for OrangeHRM endpoints.
+- Adding database validation.
+- Adding retry logic for unstable tests.
+- Adding parallel execution across multiple browsers.
+- Adding test tagging for smoke and regression suites.
+- Publishing Allure reports through GitHub Pages.
 
 ## Author
 
-```text
-Kareem Taha Abd El-Fattah Mohammed
-Route Testing Diploma
-OrangeHRM Graduation Project
-```
+**Kareem Taha Abd El-Fattah**
+
+Aspiring Software Testing and QA Engineer with experience in:
+
+- Manual testing.
+- API testing.
+- Selenium automation.
+- Java and TestNG.
+- SQL.
+- Jira and Zephyr.
+- Git and GitHub.
+
+## License
+
+This project is created for educational and portfolio purposes using the publicly available OrangeHRM demo application.

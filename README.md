@@ -143,41 +143,48 @@ OrangeHRM-Automation/
 │
 ├── src/
 │   ├── main/
-│   │   └── java/
-│   │       ├── driver/
-│   │       │   └── DriverManager.java
-│   │       ├── pages/
-│   │       │   ├── LoginPage.java
-│   │       │   ├── DashboardPage.java
-│   │       │   ├── PimPage.java
-│   │       │   ├── AddEmployeePage.java
-│   │       │   └── AdminPage.java
-│   │       └── utils/
-│   │           ├── ConfigReader.java
-│   │           ├── JsonDataReader.java
-│   │           └── WaitUtils.java
-│   │
-│   ├── test/
 │   │   ├── java/
-│   │   │   ├── base/
-│   │   │   │   └── BaseTest.java
-│   │   │   └── tests/
-│   │   │       ├── LoginTests.java
-│   │   │       ├── EmployeeTests.java
-│   │   │       ├── AdminTests.java
-│   │   │       └── NavigationTests.java
+│   │   │   ├── pages/
+│   │   │   │   ├── AddEmployeePage.java
+│   │   │   │   ├── CommonPage.java
+│   │   │   │   ├── DashboardPage.java
+│   │   │   │   ├── LoginPage.java
+│   │   │   │   ├── SaveSystemUser.java
+│   │   │   │   ├── ViewEmployeeListPage.java
+│   │   │   │   └── ViewSystemUsersPage.java
+│   │   │   │
+│   │   │   └── utils/
+│   │   │       ├── DataDriven.java
+│   │   │       └── WindowManager.java
 │   │   │
 │   │   └── resources/
-│   │       ├── config.properties
-│   │       └── testdata/
-│   │           └── test-data.json
+│   │       └── screenshots/
 │   │
-│   └── testng.xml
+│   └── test/
+│       ├── java/
+│       │   ├── base/
+│       │   │   └── Base.java
+│       │   │
+│       │   ├── tests/
+│       │   │   ├── AddEmployeeTest.java
+│       │   │   ├── DashboardTest.java
+│       │   │   ├── LoginTest.java
+│       │   │   ├── SaveSystemUserPageList.java
+│       │   │   └── ViewEmployeeListTest.java
+│       │   │
+│       │   └── utility/
+│       │       └── ConfigReader.java
+│       │
+│       └── resources/
+│           ├── testData/
+│           │   └── testData.json
+│           └── config.properties
 │
-├── allure-report/
+├── testNG.xml
 ├── pom.xml
 ├── .gitignore
-└── README.md
+├── README.md
+└── allure-report/
 ```
 
 > Adjust the structure above to match the actual package and file names in your repository.
